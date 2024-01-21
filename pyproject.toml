@@ -1,0 +1,81 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lancedb-haystack"
+dynamic = ["version"]
+description = 'An integration of LanceDB vector database backend with Haystack'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "Apache-2.0"
+keywords = []
+authors = [
+  { name = "deepset GmbH", email = "info@deepset.ai" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/unknown/lancedb-haystack#readme"
+Issues = "https://github.com/unknown/lancedb-haystack/issues"
+Source = "https://github.com/unknown/lancedb-haystack"
+
+[tool.hatch.version]
+path = "src/lancedb_haystack/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+]
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+]
+cov = [
+  "test-cov",
+  "cov-report",
+]
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+[tool.hatch.envs.types]
+dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/lancedb_haystack tests}"
+
+[tool.coverage.run]
+source_pkgs = ["lancedb_haystack", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/lancedb_haystack/__about__.py",
+]
+
+[tool.coverage.paths]
+lancedb_haystack = ["src/lancedb_haystack", "*/lancedb-haystack/src/lancedb_haystack"]
+tests = ["tests", "*/lancedb-haystack/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
