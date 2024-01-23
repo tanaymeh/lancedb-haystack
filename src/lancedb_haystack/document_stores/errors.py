@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-from lancedb_haystack.document_store import LanceDBDocumentStore
 
-__all__ = ("LanceDBDocumentStore",)
+class LanceDBDocumentStoreFilterError:
+    pass
